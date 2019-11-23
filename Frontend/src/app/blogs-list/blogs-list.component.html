@@ -1,0 +1,14 @@
+<h4 class="my-5">
+    My posts
+</h4>
+<div class="card-columns">
+    <div  *ngFor="let post of posts; index as i;" >
+        <a class="card btn " href="#" style="width: 14rem;">
+            <img class="card-img-top" src="{{post.coverImage}}" alt="Card image cap">
+            <div class="card p-auto" >
+                <h5 class="card-title">{{post.title}}</h5>
+                <p class="card-text">{{post.excerpt}}</p>
+            </div>
+        </a>
+    </div>
+</div>

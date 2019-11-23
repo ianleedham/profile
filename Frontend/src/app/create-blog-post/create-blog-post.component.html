@@ -1,0 +1,35 @@
+<div class="container">
+    <form #postForm="ngForm" class="row">
+        <div class="col-md-9">
+            <div class="form-group"  >
+                <label for="post-title">Title</label>
+                <input required type="text" [(ngModel)]="post.title" name="post-title" class="form-control" id="post-title">
+            </div>
+            <div class="form-group">
+                <label for="post-body">Body</label>
+                <textarea required rows="10" type="textarea" [(ngModel)]="post.body" name="name" class="form-control" id="post-body"></textarea>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <Label for="post-category">Category</Label>
+                <select class="form-control"  id="post-category"
+                        
+                        [(ngModel)]="post.category" name="post-category">
+                <option *ngFor="let category of categories" [value]="category">{{category.name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="post-cover-image">Cover image</label>
+                <input type="file" [(ngModel)]="post.coverImage" name="post-cover-image" id="post-cover-image">
+            </div>
+            <div class="form-group">
+                <label for="post-excerpt">Excerpt</label>
+                <input type="text" [(ngModel)]="post.excerpt" name="post-excerpt" class="form-control" id="post-excerpt">
+            </div>
+        </div>
+        
+        <markdown [data]="post.body" class="col row"></markdown>
+        <button type="submit" (click)="submitForm()" class=" row col btn btn-primary float-right">Submit</button>
+    </form>
+</div>

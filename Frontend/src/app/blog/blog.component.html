@@ -1,0 +1,23 @@
+<div class="blog-post container">
+    <div class="blog-post-header ">
+        <div class="blog-post-category row">
+            <div class="float-left badge badge-secondary p-3" *ngIf="post.category">
+                {{post.category.name}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="text-center col">
+                <h3 class="">
+                    {{post.title}}
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="blog-post-body row">
+        <markdown [data]="post.body" class="col"></markdown>
+    </div>
+    <div class="blog-post-footer row float-right">
+        <p>By {{post.author}} on &nbsp;</p>
+        <p> {{post.DateWritten | date :'longDate'}}</p>
+    </div>
+</div>

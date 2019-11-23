@@ -1,0 +1,18 @@
+# /docker-compose.yml
+version: "3.3"
+
+services:
+  client:
+    build: ./Frontend
+    expose:
+      - 80
+    volumes:
+      - ./Frontend:/app
+    environment:
+      VIRTUAL_HOST: ianleedham.local
+      VIRTUAL_PORT: 80
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
