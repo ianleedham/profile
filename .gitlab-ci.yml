@@ -27,7 +27,9 @@ deploy_image:
     - mkdir -p ~/.ssh
     - eval $(ssh-agent -s)
 
-    # add private key from env to docker file
+    # add private key from env to docker file  
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
     
   script:
