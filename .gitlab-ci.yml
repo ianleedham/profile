@@ -39,4 +39,4 @@ deploy_image:
     - scp ./docker-compose-prod.yml gitlab@ianleedham.dev:~/portfolio/
 
     # call docker compose file
-    - ssh gitlab@ianleedham.dev cd ~/portfolio && docker-compose up
+    - ssh gitlab@ianleedham.dev cd /home/gitlab/portfolio && docker-compose up
