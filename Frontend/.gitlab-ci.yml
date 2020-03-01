@@ -10,25 +10,29 @@ build_image:
   
       
   before_script:
-    #- docker info
+    - docker info
+    - docker login -u registry -p $CI_BUILD_TOKEN $CI_REGISTRY
   script:
     - docker build -t $CI_REGISTRY_IMAGE:$CI_BUILD_TAG .
-
-    - docker login -u registry -p $CI_BUILD_TOKEN $CI_REGISTRY
     - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
     
-
 deploy_image:
   stage: deploy
   image: debian:latest
   when: manual
 
   before_script:
+  #check ssh is installed
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - mkdir -p ~/.ssh
     - eval $(ssh-agent -s)
+
+    # add private key from env to docker file
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
     
   script:
     - echo 'running image on ianleedham.dev'
+    # copy docker compose file to server
+    # call docker compose file
     - ssh -o StrictHostKeyChecking=no gitlab@"$QA_SERVER" 'ls /var/www/html/'
+    - scp ./docker-compose.yml gitlab@ianleedham.dev:/srv/profile
