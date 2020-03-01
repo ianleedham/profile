@@ -35,7 +35,8 @@ deploy_image:
   script:
     - echo 'running image on ianleedham.dev'
     # copy docker compose file to server
-    - ssh -o StrictHostKeyChecking=no gitlab@ianleedham.dev 'ls /var/www/html/'
+    - ssh gitlab@ianleedham.dev 'ls /var/www/html/'
     - scp ./docker-compose-prod.yml gitlab@ianleedham.dev:~/portfolio/
 
     # call docker compose file
+    - ssh gitlab@ianleedham.dev cd ~/portfolio && docker-compose up
