@@ -13,7 +13,7 @@ build_image:
     - docker info
     - docker login -u registry -p $CI_BUILD_TOKEN $CI_REGISTRY
   script:
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_BUILD_TAG .
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_BUILD_TAG ./Frontend
     - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
     
 deploy_image:
@@ -35,4 +35,4 @@ deploy_image:
     # copy docker compose file to server
     # call docker compose file
     - ssh -o StrictHostKeyChecking=no gitlab@"$QA_SERVER" 'ls /var/www/html/'
-    - scp ./docker-compose.yml gitlab@ianleedham.dev:/srv/profile
+    - scp ./Frontend/docker-compose-prod.yml gitlab@ianleedham.dev:/srv/profile
