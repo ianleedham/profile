@@ -27,7 +27,7 @@ deploy_image:
     - eval $(ssh-agent -s)
     
     - apk add --no-cache py-pip
-   - pip install docker-compose
+    - pip install docker-compose
   
     # add private key from env to docker file  
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
