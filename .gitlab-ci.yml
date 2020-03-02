@@ -33,9 +33,10 @@ deploy_image:
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
     
   script:
+    # Re-direct to remote environment.
+    - export DOCKER_HOST="ssh://gitlab@ianleedham.dev"
     - echo 'running image on ianleedham.dev'
     # copy docker compose file to server
-    - ssh gitlab@ianleedham.dev 'ls /var/www/html/'
 
     # call docker compose file
-    - ssh gitlab@ianleedham.dev 'docker-compose -f' <  docker-compose-prod.yml up -d
+    - docker-compose -f docker-compose-prod.yml up -d
