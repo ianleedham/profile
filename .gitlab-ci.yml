@@ -22,7 +22,7 @@ deploy_image:
 
   before_script:
   #check ssh is installed
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    #- 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - mkdir -p ~/.ssh
     - eval $(ssh-agent -s)
   
