@@ -38,4 +38,4 @@ deploy_image:
     - ssh gitlab@ianleedham.dev 'ls /var/www/html/'
 
     # call docker compose file
-    - ssh gitlab@ianleedham.dev 'docker-compose up -f' <  docker-compose-prod.yml
+    - ssh gitlab@ianleedham.dev 'docker-compose -f' <  docker-compose-prod.yml 'up'
