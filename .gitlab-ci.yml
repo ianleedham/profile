@@ -23,13 +23,13 @@ deploy_image:
   before_script:
   #check ssh is installed
     #- 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-    - mkdir -p ~/.ssh
-    - eval $(ssh-agent -s)
+    #- mkdir -p ~/.ssh
+    #- eval $(ssh-agent -s)
   
     # add private key from env to docker file  
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    #- echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     
-    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    #- '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
     
   script:
     # Re-direct to remote environment.
@@ -38,4 +38,6 @@ deploy_image:
     # copy docker compose file to server
 
     # call docker compose file
+    
+    - docker stack deploy -c docker-compose-prod.yml --with-registry-auth ianleedham.dev
     - docker-compose -f docker-compose-prod.yml up -d
