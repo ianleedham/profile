@@ -18,16 +18,13 @@ build_image:
     
 deploy_image:
   stage: deploy
-  image: docker:latest
+  image: tiangolo/docker-with-compose
 
   before_script:
   #check ssh is installed
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - mkdir -p ~/.ssh
     - eval $(ssh-agent -s)
-    
-    - apk add --no-cache py-pip
-    - pip install docker-compose
   
     # add private key from env to docker file  
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
