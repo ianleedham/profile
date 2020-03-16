@@ -19,7 +19,7 @@ build_image:
 deploy_image:
   stage: build
   when: manual
-  image: alpine/helm:latest
+  image: dtzar/helm-kubectl
   script:
     #- helm --namespace $NAMESPACE upgrade -i $REPO_NAME --set image.tag=$TAG,env=$ENV,image.repository=$REPO_REGISTRY_URL $PATH_TO_VALUES
     #- helm --namespace $KUBE_NAMESPACE upgrade -i $CI_REGISTRY_IMAGE --set image.tag=$CI_BUILD_TAG,env=$ENV,image.repository=CI_REGISTRY $PATH_TO_VALUES
