@@ -17,27 +17,21 @@ build_image:
     - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
     
 deploy_image:
-  stage: deploy
-  image: tiangolo/docker-with-compose
-
-  before_script:
-  #check ssh is installed
-    #- 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-    #- mkdir -p ~/.ssh
-    #- eval $(ssh-agent -s)
-  
-    # add private key from env to docker file  
-    #- echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    
-    #- '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-    
+  stage: build
+  when: manual
+  image: alpine/helm:latest
   script:
-    # Re-direct to remote environment.
-    - export DOCKER_HOST="ssh://gitlab@ianleedham.dev"
-    - echo 'running image on ianleedham.dev'
-    # copy docker compose file to server
-
-    # call docker compose file
+    #- helm --namespace $NAMESPACE upgrade -i $REPO_NAME --set image.tag=$TAG,env=$ENV,image.repository=$REPO_REGISTRY_URL $PATH_TO_VALUES
+    #- helm --namespace $KUBE_NAMESPACE upgrade -i $CI_REGISTRY_IMAGE --set image.tag=$CI_BUILD_TAG,env=$ENV,image.repository=CI_REGISTRY $PATH_TO_VALUES
     
-    - docker stack deploy -c docker-compose-prod.yml --with-registry-auth ianleedham.dev
-    - docker-compose -f docker-compose-prod.yml up -d
+    - kubectl config set-cluster k8s --server="${KUBE_URL}"
+    - kubectl config set clusters.k8s.certificate-authority-data ${KUBE_CA_PEM_FILE}
+    - kubectl config set-credentials gitlab --token="${KUBE_TOKEN}"
+    - kubectl config set-context default --cluster=k8s --user=gitlab
+    - kubectl config use-context default
+    - helm init --client-only
+    - helm upgrade go-hello-world ./ --install --set image.tag=${$CI_BUILD_TAG}
+
+  tags:
+    - k8s
+    - dev
