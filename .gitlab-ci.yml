@@ -32,6 +32,6 @@ deploy_image:
     - helm init --client-only
     - helm upgrade go-hello-world ./ --install --set image.tag=${$CI_BUILD_TAG}
 
-  tags:
-    - k8s
-    - dev
+  #tags:
+  #  - k8s
+  #  - dev
