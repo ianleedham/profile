@@ -16,12 +16,9 @@ export COMMIT_SHA1=$COMMIT_SHA1
 echo $DOCKER_KEY > key.pem
 echo $DOCKER_CERT > cert.pem
 echo $DOCKER_CA > ca.pem
-cat ca.pem
+
 docker \
   -H=95.216.160.125 \
-  --tlscacert=ca.pem \
-  --tlskey=key.pem \
-  --tlscert=cert.pem \
   --tlsverify \
   info
 
