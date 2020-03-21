@@ -21,6 +21,7 @@ deploy_image:
   when: manual
   image: alpine:latest
   script:
+    - mkdir ~/.docker
     - touch ~/.docker/key.pem
     - cat $docker_daemon_key > ~/.docker/key.pem
     - cat ~/.docker/key.pem
