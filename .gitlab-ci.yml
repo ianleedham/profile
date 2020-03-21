@@ -19,19 +19,8 @@ build_image:
 deploy_image:
   stage: build
   when: manual
-  image: dtzar/helm-kubectl
+  image: alpine:latest
   script:
-    #- helm --namespace $NAMESPACE upgrade -i $REPO_NAME --set image.tag=$TAG,env=$ENV,image.repository=$REPO_REGISTRY_URL $PATH_TO_VALUES
-    #- helm --namespace $KUBE_NAMESPACE upgrade -i $CI_REGISTRY_IMAGE --set image.tag=$CI_BUILD_TAG,env=$ENV,image.repository=CI_REGISTRY $PATH_TO_VALUES
-    
-    - kubectl config set-cluster k8s --server="${KUBE_URL}"
-    - kubectl config set clusters.k8s.certificate-authority-data ${KUBE_CA_PEM_FILE}
-    - kubectl config set-credentials gitlab --token="${KUBE_TOKEN}"
-    - kubectl config set-context default --cluster=k8s --user=gitlab
-    - kubectl config use-context default
-    - helm init --client-only
-    - helm upgrade go-hello-world ./ --install --set image.tag=${$CI_BUILD_TAG}
-
-  #tags:
-  #  - k8s
-  #  - dev
+    - touch ~/.docker/key.pem
+    - cat $docker_daemon_key > ~/.docker/key.pem
+    - cat ~/.docker/key.pem
