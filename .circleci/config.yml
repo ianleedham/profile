@@ -26,13 +26,9 @@ jobs:
             echo "$DOCKER_KEY" > ~/.docker/key.pem
             echo "$DOCKER_CERT" > ~/.docker/cert.pem
             echo "$DOCKER_CA" > ~/.docker/ca.pem
-
-            docker \
-              -H=95.216.160.125 \
-              --tlsverify \
-              info
-
-            echo $IMAGE_NAME:$CIRCLE_SHA1
+            export DOCKER_TLS_VERIFY="1"
+            export DOCKER_HOST="tcp://95.216.160.125
+            docker info
 workflows:
   version: 2
   build-master:
