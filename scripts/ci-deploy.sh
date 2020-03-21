@@ -13,9 +13,9 @@ export COMMIT_SHA1=$COMMIT_SHA1
 # envsubst <./kube/do-sample-deployment.yml >./kube/do-sample-deployment.yml.out
 # mv ./kube/do-sample-deployment.yml.out ./kube/do-sample-deployment.yml
 
-echo $DOCKER_KEY > key.pem
-echo $DOCKER_CERT > cert.pem
-echo $DOCKER_CA > ca.pem
+echo $DOCKER_KEY > ~/.docker/key.pem
+echo $DOCKER_CERT > ~/.docker/cert.pem
+echo $DOCKER_CA > ~/.docker/ca.pem
 
 docker \
   -H=95.216.160.125 \
