@@ -21,13 +21,21 @@ jobs:
             docker push $IMAGE_NAME:latest
             docker push $IMAGE_NAME:$CIRCLE_SHA1
       - run:
-          name: Deploy Code
+          name: Create key.pem
           command: 
             echo  -e "$DOCKER_KEY" > key.pem
+      - run:
+          name: Create cert.pem
+          command:
             echo  -e "$DOCKER_CERT" > cert.pem
+      - run:
+          name: Create ca.pem
+          command:
             echo  -e "$DOCKER_CA" > ca.pem
-
-            docker -H=$DOCKER_SERVER --tlscacert=ca.pem --tlskey=key.pem --tlscert=cert.pem --tlsverify info
+      - run:
+          name: Deploy Code
+          command: 
+              docker -H=$DOCKER_SERVER --tlscacert=ca.pem --tlskey=key.pem --tlscert=cert.pem --tlsverify info
 workflows:
   version: 2
   build-master:
