@@ -27,7 +27,7 @@ jobs:
             echo "$DOCKER_CERT" > ~/.docker/cert.pem
             echo "$DOCKER_CA" > ~/.docker/ca.pem
             docker \
-            H=$DOCKER_SERVER \
+            -H $DOCKER_SERVER \
             --tlscacert=ca.pem \
             --tlskey=key.pem \
             --tlscert=cert.pem \
@@ -35,7 +35,7 @@ jobs:
             docker info
 
             docker \
-            H=$DOCKER_SERVER \
+            -h $DOCKER_SERVER \
             --tlscacert=~/.docker/ca.pem \
             --tlskey=~/.docker/key.pem \
             --tlscert=~/.docker/cert.pem \
