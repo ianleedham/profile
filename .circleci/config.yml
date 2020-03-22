@@ -27,13 +27,7 @@ jobs:
             echo  -e "$DOCKER_CERT" > ~/.docker/cert.pem
             echo  -e "$DOCKER_CA" > ~/.docker/ca.pem
 
-            docker \
-            -H $DOCKER_SERVER \
-            --tlscacert=~/.docker/ca.pem \
-            --tlskey=~/.docker/key.pem \
-            --tlscert=~/.docker/cert.pem \
-            --tlsverify \
-            docker info
+            docker -H=$DOCKER_SERVER --tlscacert=~/.docker/ca.pem --tlskey=~/.docker/key.pem --tlscert=~/.docker/cert.pem --tlsverify info
 workflows:
   version: 2
   build-master:
