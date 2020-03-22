@@ -23,19 +23,12 @@ jobs:
       - run:
           name: Deploy Code
           command: 
-            echo "$DOCKER_KEY" > ~/.docker/key.pem
-            echo "$DOCKER_CERT" > ~/.docker/cert.pem
-            echo "$DOCKER_CA" > ~/.docker/ca.pem
-            docker \
-            -H $DOCKER_SERVER \
-            --tlscacert=ca.pem \
-            --tlskey=key.pem \
-            --tlscert=cert.pem \
-            --tlsverify \
-            docker info
+            echo  -e "$DOCKER_KEY" > ~/.docker/key.pem
+            echo  -e "$DOCKER_CERT" > ~/.docker/cert.pem
+            echo  -e "$DOCKER_CA" > ~/.docker/ca.pem
 
             docker \
-            -h $DOCKER_SERVER \
+            -H $DOCKER_SERVER \
             --tlscacert=~/.docker/ca.pem \
             --tlskey=~/.docker/key.pem \
             --tlscert=~/.docker/cert.pem \
