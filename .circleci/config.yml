@@ -31,7 +31,7 @@ jobs:
       - run:
           name: Create ca.pem
           command:
-            echo  -e "$DOCKER_CA" > ca.pem
+            echo  "$DOCKER_CA" | base64 --decode > ca.pem
       - run:
           name: Deploy Code
           command: 
