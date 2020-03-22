@@ -23,15 +23,15 @@ jobs:
       - run:
           name: Create key.pem
           command: 
-            echo  -e "$DOCKER_KEY" > key.pem
+            echo "$DOCKER_KEY" | base64 --decode > key.pem
       - run:
           name: Create cert.pem
           command:
-            echo  -e "$DOCKER_CERT" > cert.pem
+            echo "$DOCKER_CERT" | base64 --decode > cert.pem
       - run:
           name: Create ca.pem
           command:
-            echo  "$DOCKER_CA" | base64 --decode > ca.pem
+            echo "$DOCKER_CA" | base64 --decode > ca.pem
       - run:
           name: Deploy Code
           command: 
