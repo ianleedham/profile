@@ -26,8 +26,20 @@ jobs:
             echo "$DOCKER_KEY" > ~/.docker/key.pem
             echo "$DOCKER_CERT" > ~/.docker/cert.pem
             echo "$DOCKER_CA" > ~/.docker/ca.pem
-            export DOCKER_TLS_VERIFY="1"
-            export DOCKER_HOST="tcp://95.216.160.125"
+            docker \
+            H=$DOCKER_SERVER \
+            --tlscacert=ca.pem \
+            --tlskey=key.pem \
+            --tlscert=cert.pem \
+            --tlsverify \
+            docker info
+
+            docker \
+            H=$DOCKER_SERVER \
+            --tlscacert=~/.docker/ca.pem \
+            --tlskey=~/.docker/key.pem \
+            --tlscert=~/.docker/cert.pem \
+            --tlsverify \
             docker info
 workflows:
   version: 2
